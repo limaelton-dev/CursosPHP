@@ -3,9 +3,9 @@
 if(isset($_POST['email']) && !empty( $_POST['email'])){ //verifica se existe e se não está vazio
 
 //nessas variáveis abaixo, estou pegando o valor dado no formulário
-$nome = addslashes($_POST(['name']));
-$email = addslashes($_POST(['email']));
-$mensagem = addslashes($_POST(['message']));
+$nome = addslashes($_POST['name']);
+$email = addslashes($_POST['email']);
+$mensagem = addslashes($_POST['message']);
 
 $to = "eltonlima.contato@gmail.com"; //para quem 
 $subject = "Contato - PROJETO X"; //esse aqui é o assunto do email
