@@ -4,7 +4,6 @@ namespace Alura\Pdo\Infrastructure\Repository;
 
 use Alura\Pdo\Domain\Model\Student;
 use Alura\Pdo\Domain\Repository\StudentRepository;
-use Alura\Pdo\Infrastructure\Persistence\ConnectionCreator;
 use DateTimeImmutable;
 use DateTimeInterface;
 use PDOStatement;
@@ -13,7 +12,7 @@ use PDO;
 class PdoStudentRepository implements StudentRepository
 
 {
-    private \PDO $connection;
+    private PDO $connection;
 
     public function __construct(PDO $connection)
     {
@@ -40,7 +39,7 @@ class PdoStudentRepository implements StudentRepository
 
     private function hydrateStudentList(PDOStatement $stmt): array
     {
-        $studentDataList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $studentDataList = $stmt->fetchAll();
         $studentList = [];
         
             foreach($studentDataList as $studentData) {
@@ -68,6 +67,7 @@ class PdoStudentRepository implements StudentRepository
     {
         $insertQuery = 'INSERT INTO students (name, birth_date) VALUES (:name, :birth_date);'; //aqui poderia ter colocado o ?
         $stmt = $this->connection->prepare($insertQuery);
+        
 
         $sucess = $stmt->execute([ //uma nova forma de passar parâmetros, se fosse com '?', não precisaria informar os indices, assim com um array numérico
             ':name' => $student->name(),
