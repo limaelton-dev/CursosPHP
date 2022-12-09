@@ -2,6 +2,8 @@
 
 namespace Alura\Pdo\Domain\Model;
 
+//ini_set('memory_limit', '4024M'); // or you could use 1G
+
 class Student
 {
     private ?int $id;
@@ -59,6 +61,6 @@ class Student
 
     public function phones(): array
     {
-        return $this->phones();
+        return $this->phones;
     }
 }
