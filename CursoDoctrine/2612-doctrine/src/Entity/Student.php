@@ -18,7 +18,11 @@ class Student
     #[Column] //aqui informo que o $id vai ser uma coluna do BD
     public int $id;
 
-    #[OneToMany(targetEntity: Phone::class, mappedBy: "student")] //um(aluno) para muitos(telefones), assim defino relacionamento
+    #[OneToMany(
+        mappedBy: "student",
+        targetEntity: Phone::class,  
+        cascade: ["persist", "remove"]
+    )] //um(aluno) para muitos(telefones), assim defino relacionamento
     //preciso informar o tagetEntity e relacionar e com PHONE, depois o mappedBy para o atributo $student, da classe Phone
     private Collection $phones; //iterable, qualquer coisa que possa fazer um foreach
 
@@ -35,7 +39,7 @@ class Student
         $phone->setStudent($this); //defino lá no telefone, que é este o aluno em questão
     }
 
-    public function phones(): iterable
+    public function phones(): Collection
     {
         return $this->phones;
     }
