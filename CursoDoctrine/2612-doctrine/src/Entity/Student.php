@@ -14,7 +14,7 @@ class Student
     #[Id]
     #[GeneratedValue] //aqui peço pro PDO gerar um valor automaticamente
     #[Column] //aqui informo que o $id vai ser uma coluna do BD
-    public readonly int $id;
+    public int $id;
 
     public function __construct(
         #[Column]  //aqui to informando que o nome vai ser uma coluna
