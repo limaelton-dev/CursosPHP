@@ -18,7 +18,7 @@ class Student
 
     public function __construct(
         #[Column]  //aqui to informando que o nome vai ser uma coluna
-        public readonly string $name
+        public string $name
     ) {
 
     }
