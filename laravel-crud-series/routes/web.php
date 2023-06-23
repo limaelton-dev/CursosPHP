@@ -15,10 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/serie');
+    return redirect('/series');
 });
 
 Route::resource('/series', SeriesController::class)
-->except(['show']);
-
-
+    ->except(['show']);

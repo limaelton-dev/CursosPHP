@@ -114,7 +114,7 @@ class PdoStudentRepository implements StudentRepository
         $stmt->bindValue(':birth_date', $student->birthDate()->format('Y-m-d'));
         $stmt->bindValue(':id', $student->id(), PDO::PARAM_INT);
 
-        return $stmt->execute;
+        return $stmt->execute();
     }
 
     public function remove(Student $student): bool

@@ -19,5 +19,5 @@ $cursos = $buscador->buscar('/cursos-online-programacao/php');
 
 
 foreach ($cursos as $curso) { //Faço um loop em cada um dos cursos, com o curso
-    echo $curso . PHP_EOL;  //$curso é um elemento do dom-crawler, pois $cursos as $curso.
+    echo $curso . PHP_EOL;  
 }
