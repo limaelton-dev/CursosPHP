@@ -6,6 +6,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-dd($_SERVER);
+// dd($_SERVER);
+
 
 Router::run();
