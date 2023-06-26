@@ -1,11 +1,12 @@
 <?php
 namespace app\core;
 
+use app\core\ControllerParams;
 use Exception;
 
 class Controller
 {
-    function execute($router)
+    function execute(string $router)
     {
         if(!str_contains($router, '@')) { //verifico se existe o '@' na string
             throw new Exception("A rota está registrada com formato errado");
@@ -28,7 +29,10 @@ class Controller
             throw new Exception("O método {$method} não existe no controller {$controllerNamespace} não existe");
         }
 
+        $params = new ControllerParams;
+        $params = $params->get($router);
+
         //se existir eu chamo o método;
-        $controller->$method();
+        $controller->$method($params);
     }
 }
