@@ -2,10 +2,21 @@
 
 namespace app\controllers;
 
-class UserController
+use app\core\Request;
+
+class UserController extends Controller
 {
     function edit($params) 
     {
-        dd($params[0]);
+        $this->view('user', 
+                    [
+                        'title' => 'Editar User'
+                    ]);
+    }
+
+    function update($params) 
+    {
+        $response = Request::only('firstName');
+        dd($response);
     }
 }
