@@ -10,11 +10,17 @@ class HomeController extends Controller
     {
         $filters = new Filters;
         
-        $filters->where('id', '>', 50, 'and');
-        $filters->where('firstName', 'like', "%xandecar%", 'or');
-        $filters->where('id', 'IN', [1,3,8]);
+        $filters->where('id', '>', 50);
+        $filters->limit(5);
+        $filters->orderBy('id', 'desc');
 
-        $filters->dump();
+        $user = new User;
+        $user->setFilters($filters);
+        $usersFound = $user->fetchAll(); 
+
+        dd($usersFound);
+
+        //$filters->dump();
 
 
         $this->view('home', ['title' => 'Home']);    

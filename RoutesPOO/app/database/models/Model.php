@@ -1,7 +1,9 @@
 <?php
 namespace app\database\models;
 
+use app\database\Connection;
 use app\database\Filters;
+use PDO;
 use PDOException;
 
 abstract class Model 
@@ -16,13 +18,19 @@ abstract class Model
     
     function setFilters(Filters $filters) 
     {
-        $this->filters = $filters;    
+        $this->filters = $filters->dump();    
     }
 
     function fetchAll() 
     {
         try {
-            $sql = "SELECT {$this->fields} FROM {$this->table} {$this->filters}";
+            $sql = "select {$this->fields} from {$this->table} {$this->filters}";
+
+            $connection = Connection::connect();
+
+            $query = $connection->query($sql);
+
+            return $query->fetchAll(PDO::FETCH_CLASS, get_called_class());
         } catch (PDOException $e) {
             dd($e->getMessage());
         }
