@@ -9,16 +9,16 @@ class HomeController extends Controller
     function index() 
     {
         $filters = new Filters;
-        
-        $filters->where('id', '>', 50);
-        $filters->limit(5);
-        $filters->orderBy('id', 'desc');
+        $filters->where('id', '>', 2);
+        // $filters->where('firstName', '=', 'João');
 
         $user = new User;
         $user->setFilters($filters);
-        $usersFound = $user->fetchAll(); 
+        $userFound = $user->count(); 
 
-        dd($usersFound);
+         
+
+        dd($userFound);
 
         //$filters->dump();
 
