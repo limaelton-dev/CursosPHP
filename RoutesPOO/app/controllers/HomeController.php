@@ -9,12 +9,13 @@ class HomeController extends Controller
     function index() 
     {
         $filters = new Filters;
-        $filters->where('id', '>', 2);
-        // $filters->where('firstName', '=', 'João');
+        $filters->where('users.id', '<', 2);
+        $filters->join('teste', 'users.id', '=', 'teste.id_user');
 
         $user = new User;
+        $user->setFields('users.id, firstName, carro');
         $user->setFilters($filters);
-        $userFound = $user->count(); 
+        $userFound = $user->fetchAll(); 
 
          
 
