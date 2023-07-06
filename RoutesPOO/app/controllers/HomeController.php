@@ -28,8 +28,6 @@ class HomeController extends Controller
             'password' => '123'
         ]);
 
-        dd($created);
-
 
         $this->view('home', ['title' => 'Home']);    
     }

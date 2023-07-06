@@ -32,7 +32,7 @@ abstract class Model
 
             $prepare = $connect->prepare($sql);
 
-            return $prepare->execute([$data]);
+            return $prepare->execute($data);
         } catch (PDOException $e) {
             dd($e->getMessage());
         }
