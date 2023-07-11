@@ -1,8 +1,7 @@
 <?php
 namespace app\database\models;
 
-use app\database\Connection;
-use app\database\Filters;
+use app\database\{Connection, Filters, Pagination};
 use PDO;
 use PDOException;
 
@@ -10,6 +9,7 @@ abstract class Model
 {
     private string $fields = '*';
     private string $filters = '';
+    private string $pagination = '';
 
     function setFields($fields) 
     {
@@ -19,6 +19,12 @@ abstract class Model
     function setFilters(Filters $filters) 
     {
         $this->filters = $filters->dump();    
+    }
+
+    function setPagination(Pagination $pagination) 
+    {
+        $pagination->setTotalItems($this->count());
+        $this->pagination = $pagination->dump();
     }
 
     function create(array $data) 
@@ -38,10 +44,34 @@ abstract class Model
         }
     }
 
+    function update(string $field, string|int $fieldValue, array $data) 
+    {
+        try {
+            $sql ="update {$this->table} set ";
+            foreach ($data as $key => $value) {
+                $sql .= " {$key} = :{$key},";
+            }
+            //retira a virgula do final da string
+            $sql = rtrim($sql, ',');
+
+            $sql .= " where {$field} = :{$field}";
+
+            $connection = Connection::connect();
+
+            $data[$field] = $fieldValue;
+
+            $prepare = $connection->prepare($sql);
+
+            return $prepare->execute($data);
+        } catch(PDOException $e) {
+            dd($e->getMessage());
+        }
+    }
+
     function fetchAll() 
     {
         try {
-            $sql = "select {$this->fields} from {$this->table} {$this->filters}";
+            $sql = "select {$this->fields} from {$this->table} {$this->filters} {$this->pagination}";
 
             $connection = Connection::connect();
 
