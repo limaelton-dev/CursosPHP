@@ -3,10 +3,11 @@
 <h1>User</h1>
 
 
-<form action="/user/update/12" method="post">
+<form action="/user/update" method="post">
 
     <input type="text" name="firstName" id="firstName" value="Elton">
     <input type="text" name="lastName" id="lastName" value="Lima">
+    <?= getToken(); ?>
     <input type="email" name="email" id="email" value="elton@gmail.com">
     <input type="password" name="password" id="password" value="1234">
 
