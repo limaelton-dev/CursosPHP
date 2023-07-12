@@ -5,7 +5,7 @@ class Pagination
 {
     private int $currentPage = 1;
     private int $totalPages;
-    private int $linksPerPage = 5;
+    private int $linksPerPage = 3;
     private int $itemsPerPage = 10;
     private int $totalItems;
     private string $pageIdentifier = 'page';
@@ -26,9 +26,19 @@ class Pagination
         $this->itemsPerPage = $itemsPerPage;
     }
 
+    function getTotal() 
+    {
+        return $this->totalItems;   
+    }
+
+    function getPerPage() 
+    {
+        return $this->itemsPerPage;
+    }
+
     private function calculations()
     {
-        $this->currentPage = $_GET['page'] ?? 1;
+        $this->currentPage = $_GET[$this->pageIdentifier] ?? 1;
 
         $offset = ($this->currentPage - 1) * $this->itemsPerPage;
         $this->totalPages = ceil($this->totalItems / $this->itemsPerPage);
@@ -57,7 +67,7 @@ class Pagination
             if($i > 0 && $i <= $this->totalPages) {
                 $class = $this->currentPage === $i ? 'active' : '';
                 $linkPage = http_build_query(array_merge($_GET, [$this->pageIdentifier => $i]));
-                $links .= "<li class='page-item {$class}'><a href='?{$linkPage}' class='page-link'></a></li>"
+                $links .= "<li class='page-item {$class}'><a href='?{$linkPage}' class='page-link'>{$i}</a></li>";
             }
         }
 
@@ -69,7 +79,8 @@ class Pagination
             $links .= "<li class='page-item'><a href='?{$last}' class='page-link'>Última</a></li>";
         }
 
-
         $links .= "</ul>";
+
+        return $links;
     }
 }

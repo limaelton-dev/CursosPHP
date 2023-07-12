@@ -9,11 +9,11 @@ class HomeController extends Controller
     function index() 
     {
         $filters = new Filters;
-        $filters->where('users.id', '>', 20);
+        //$filters->where('users.id', '>', 0);
         // $filters->join('teste', 'users.id', '=', 'teste.id_user');
 
         $pagination = new Pagination;
-        $pagination->setItemsPerPage(10);
+        $pagination->setItemsPerPage(3);
 
 
         $user = new User;
@@ -24,7 +24,7 @@ class HomeController extends Controller
 
          
 
-        dd($usersFound);
+        // dd($usersFound);
 
         // $created = $user->create([
         //     'firstName' => 'Tainara',
