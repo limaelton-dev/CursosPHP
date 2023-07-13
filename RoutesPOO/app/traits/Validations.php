@@ -1,6 +1,8 @@
 <?php
 namespace app\traits;
 
+use app\core\Request;
+
 trait Validations
 {
     function unique() 
@@ -11,12 +13,22 @@ trait Validations
     {
         
     }
-    function required() 
+    function required($field) 
     {
-        dd('required');
+        $data = Request::input($field);
+
+        if(empty($data)) {
+            return null;
+        }
     }
-    function maxLen($param) 
+    function maxLen($field, $param) 
     {
-        dd($param);
+        $data = Request::input($field);
+
+        if(strlen($data) > $param) {
+            return null;
+        }
+
+        dd($data);
     }
 }

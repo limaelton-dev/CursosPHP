@@ -10,7 +10,7 @@ class Validate
 
     function validate(array $validationsFields) 
     {
-
+        $inputsValidations = [];
         foreach ($validationsFields as $field => $validation) {
             $havePipes = str_contains($validation, '|');
             
@@ -25,7 +25,26 @@ class Validate
                 }
                 // dd($validation);
 
-                $this->$validation($param);
+                $inputsValidations[$field] = $this->$validation($field, $param);
+            } else {
+                $validations = explode('|', $validation);
+                $param = '';
+                foreach($validations as $validation) {
+                    if(substr_count($validation, ':') === 1) {
+                        [$validation, $param] = explode(':', $validation);
+                    }
+
+                    if(!method_exists($this, $validation)) {
+                        throw new Exception("O método {$validation} não existe na validação");
+                    }
+
+                    $inputsValidations[$field] = $this->$validation($field, $param);
+
+                    if(empty($inputsValidations[$field])) {
+                        break;
+                    }
+                }
+
             }
         }
     }
