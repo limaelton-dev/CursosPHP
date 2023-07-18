@@ -7,12 +7,16 @@
     <?= flash('created'); ?>
 
     <?= getToken(); ?>
-    <?= flash('firstName'); ?>
+    
+    <?= flash('firstName', 'color: red'); ?>
     <input type="text" name="firstName" id="firstName" value="Elton">
+
     <?= flash('lastName'); ?>
     <input type="text" name="lastName" id="lastName" value="Lima">
+
     <?= flash('email'); ?>
     <input type="email" name="email" id="email" value="elton@gmail.com">
+    
     <?= flash('password'); ?>
     <input type="password" name="password" id="password" value="1234">
 

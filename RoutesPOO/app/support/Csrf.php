@@ -26,7 +26,7 @@ class Csrf
         //Esse Request, está pegando o valor do formulário com o name='token'
         $token = Request::only('token');
 
-        if($_SESSION['token'] !== $token['token']) {//token da sessão é diferente do token que está no formulário?
+        if(empty($token) || $_SESSION['token'] !== $token['token']) {//token da sessão é diferente do token que está no formulário?
             throw new Exception("Token inválido");
         } 
 
