@@ -24,13 +24,13 @@ class UserController extends Controller
             'firstName' => 'required',
             'lastName' => 'required',
             'email' => 'email|required',
-            'password' => 'maxLen:10|required'
+            'password' => 'maxLen:5|required'
         ]);
 
         if(!$validated) {
             return redirect('/user/12');
         }
 
-        // dd($validated);
+        dd($validated);
     }
 }

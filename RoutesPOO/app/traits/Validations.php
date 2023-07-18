@@ -13,7 +13,8 @@ trait Validations
     function email($field) 
     {
         if(!filter_input(INPUT_POST, $field, FILTER_VALIDATE_EMAIL)) {
-            return Flash::set($field, "Digite um e-mail válido!");
+            Flash::set($field, "Digite um e-mail válido!");
+            return null;
         }
 
         return strip_tags(Request::input($field), '<p><b><ul<span><em>');
