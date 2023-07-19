@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\core\Request;
+use app\database\models\User;
 use app\support\Csrf;
 use app\support\Validate;
 
@@ -23,7 +24,7 @@ class UserController extends Controller
         $validated = $validate->validate([
             'firstName' => 'required',
             'lastName' => 'required',
-            'email' => 'email|required',
+            'email' => 'email|required|unique:'.User::class,
             'password' => 'maxLen:5|required'
         ]);
 

@@ -6,10 +6,23 @@ use app\support\Flash;
 
 trait Validations
 {
-    function unique($field) 
+    function unique($field, $param) 
     {
-        
+        $data = Request::input($field);
+
+        $model = new $param;
+        $model->setFields('id, firstName, lastName');
+        $registerFound = $model->findBy($field, $data);
+        // dd($registerFound);
+
+        if($registerFound) {
+            Flash::set($field, "O valor {$data} já está registrado.");
+            return null;
+        }
+
+        return strip_tags($data, '<p><b><ul<span><em>');
     }
+
     function email($field) 
     {
         if(!filter_input(INPUT_POST, $field, FILTER_VALIDATE_EMAIL)) {
@@ -19,6 +32,7 @@ trait Validations
 
         return strip_tags(Request::input($field), '<p><b><ul<span><em>');
     }
+
     function required($field) 
     {
         $data = Request::input($field);
@@ -30,6 +44,7 @@ trait Validations
 
         return strip_tags($data, '<p><b><ul<span><em>');
     }
+
     function maxLen($field, $param) 
     {
         $data = Request::input($field);
