@@ -6,6 +6,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 class Email
 {
     private array $to = [];
+    private string $from;
     private string $template;
     private array $templateData = [];
     private string $message;
@@ -13,32 +14,42 @@ class Email
 
     function __construct()
     {
-        
-    }
-
-    function from()
-    {
         //Create an instance; passing `true` enables exceptions
         $this->mail = new PHPMailer(true);
-
+    
         //Server settings
         $this->mail->isSMTP();                                            //Send using SMTP
         $this->mail->Host       = env('EMAIL_HOST');              //Set the SMTP server to send through
         $this->mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $this->mail->Username   = env('EMAIL_USERNAME');                     //SMTP username
         $this->mail->Password   = env('EMAIL_PASSWORD');                               //SMTP password
-        $this->mail->Port       = env('EMAIL_PORT');                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        $this->mail->Port       = env('EMAIL_PORT');    
     }
 
-    function to()
+    function from(string $from):Email
     {
-
+        $this->from = $from;
+        return $this;
     }
 
-    function template()
-    {}
+    function to():Email
+    {
+        return $this;
+    }
+
+    function template(){}
+
     function templateData(){}
-    function subject(){}
-    function message(){}
+
+    function subject():Email
+    {
+        return $this;
+    }
+
+    function message():Email
+    {
+        return $this;
+    }
+
     function send(){}
 }
