@@ -5,8 +5,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class Email
 {
-    private array $to = [];
+    private string|array $to;
     private string $from;
+    private string $fromName;
     private string $template;
     private array $templateData = [];
     private string $message;
@@ -26,14 +27,19 @@ class Email
         $this->mail->Port       = env('EMAIL_PORT');    
     }
 
-    function from(string $from):Email
+    function from(string $from, string $name = ''):Email
     {
         $this->from = $from;
+
+        $this->fromName = $name;
+
         return $this;
     }
 
-    function to():Email
+    function to(string|array $to):Email
     {
+        $this->to = $to;
+
         return $this;
     }
 
@@ -41,15 +47,47 @@ class Email
 
     function templateData(){}
 
-    function subject():Email
+    function subject(string $subject):Email
     {
+        $this->subject = $subject;
+
         return $this;
     }
 
-    function message():Email
+    function message(string $message):Email
     {
+        $this->message = $message;
+        
         return $this;
     }
 
-    function send(){}
+    private function addAddress()
+    {
+        if(is_array($this->to)) {
+            foreach ($this->to as $to) {
+                $this->mail->addAddress($to);
+            }
+        }
+
+        if(is_string($this->to)) {
+            $this->mail->addAddress($this->to);
+        }
+    }
+
+    function send()
+    {
+        //Recipients
+        $this->mail->setFrom($this->from, $this->fromName);
+
+        $this->addAddress();
+
+        //Content
+        $this->mail->isHTML(true);
+        $this->mail->CharSet = 'UTF-8';                                  //Set email format to HTML
+        $this->mail->Subject = $this->subject;
+        $this->mail->Body    = $this->message;
+        $this->mail->AltBody = $this->message;
+
+        return $this->mail->send();
+    }
 }
