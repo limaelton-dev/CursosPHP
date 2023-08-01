@@ -12,6 +12,7 @@ class Email
     private array $templateData = [];
     private string $message;
     private PHPMailer $mail;
+    // private $subject;
 
     function __construct()
     {

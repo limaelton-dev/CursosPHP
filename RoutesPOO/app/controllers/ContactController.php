@@ -23,16 +23,16 @@ class ContactController extends Controller
             'subject' => 'required',
             'message' => 'required'
         ]);
-
+        
         if(!$validated) {
+            dd('deu pau!');
             return redirect('/contact');
         }
-
         $email = new Email;
         $sent = $email->from($validated['email'], 'Eltin teste')
                 ->to(['eltonlima.contato@hotmail.com'])
                 ->message($validated['message'])
-                ->subject($validated['subejct'])
+                ->subject($validated['subject'])
                 ->send();
 
         if($sent) {

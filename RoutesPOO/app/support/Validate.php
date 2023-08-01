@@ -36,18 +36,18 @@ class Validate
                 $param = '';
                 
                 [$validation, $param] = $this->getParam($validation, $param);
-
+                
                 $this->validationExist($validation);
-
+                
                 $this->inputsValidation[$field] = $this->$validation($field, $param);
-
+                
             }
-
+            
             if($havePipes) {
                 $validations = explode('|', $validation);
                 $param = '';
                 
-                $this->inputsValidation[$field] = $this->multipleValidations($validations, $field, $param);
+                $this->multipleValidations($validations, $field, $param);
             }
         }
 
@@ -72,10 +72,11 @@ class Validate
     private function returnValidation()
     {
         Csrf::validateToken();
-
+        
         if(in_array(null, $this->inputsValidation, true)) {
             return null;
         }
+
         return $this->inputsValidation;
     }
 }
