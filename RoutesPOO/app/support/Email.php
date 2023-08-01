@@ -1,6 +1,7 @@
 <?php
 namespace app\support;
 
+use Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class Email
@@ -8,7 +9,7 @@ class Email
     private string|array $to;
     private string $from;
     private string $fromName;
-    private string $template;
+    private string $template = '';
     private array $templateData = [];
     private string $message;
     private PHPMailer $mail;
@@ -44,7 +45,13 @@ class Email
         return $this;
     }
 
-    function template(){}
+    function template(string $template, array $templateData):Email
+    {
+        $this->template = $template;
+        $this->templateData = $templateData;
+
+        return $this;
+    }
 
     function templateData(){}
 
@@ -75,6 +82,28 @@ class Email
         }
     }
 
+    private function sendWithTemplate()
+    {
+        $file = __DIR__ . '/../views/emails/' . $this->template . '.html';
+
+        if(!file_exists($file)) {
+            throw new Exception("O template {$this->template} não existe");
+        }
+
+        //$template contém o conteúdo html do template de email
+        $template = file_get_contents($file);
+
+        $this->templateData['message'] = $this->message;
+
+        //aqui eu crio um array contendo chave já com o @ e o nome da propriedade para ser substituída
+        foreach ($this->templateData as $key => $data  ) {
+            $dataTemplate["@{$key}"] = $data;
+        }
+
+        //retorno o array substituído na linha de baixo. Agora com o conteúdo das variáveis
+        return str_replace(array_keys($dataTemplate), array_values($dataTemplate), $template);
+    }
+
     function send()
     {
         //Recipients
@@ -86,7 +115,7 @@ class Email
         $this->mail->isHTML(true);
         $this->mail->CharSet = 'UTF-8';                                  //Set email format to HTML
         $this->mail->Subject = $this->subject;
-        $this->mail->Body    = $this->message;
+        $this->mail->Body    = empty($this->template) ? $this->message : $this->sendWithTemplate();
         $this->mail->AltBody = $this->message;
 
         return $this->mail->send();
