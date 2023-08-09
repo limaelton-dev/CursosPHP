@@ -11,13 +11,13 @@ class UserService
         if($id) {
             return User::select($id);
         } else {
-            return 'else';//User::selectAll();
+            return User::selectAll();
         }
     }
 
     function post()
     {
-
+       return User::insert($_POST);
     }
 
     function update()

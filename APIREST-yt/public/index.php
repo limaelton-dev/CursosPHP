@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -9,8 +10,6 @@ use App\Services\UserService;
  if($_GET['url']){
      $url = explode('/', $_GET['url']);
 
-    echo json_encode(User::select(1));
-    die;
 
      //se acessar api na url
      if($url[0] === 'api') {
@@ -24,10 +23,12 @@ use App\Services\UserService;
         try {
             $response = call_user_func_array([new $service, $method], $url);
 
+            http_response_code(200);
             echo json_encode(['status' => 'success', 'data' => $response]);
-
         } catch (\Exception $e) {
-            //throw $th;
+            http_response_code(404);
+            // Esse segundo parâmetro, contorna o problema de o "json_encode()" tirar os acentos
+            echo json_encode(['status' => 'error', 'data' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
         }
 
         var_dump($method);
