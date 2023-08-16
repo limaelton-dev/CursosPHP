@@ -11,6 +11,12 @@ class SeriesController extends Controller
         $series = ['The Witcher', 'Peaky Blinders'];
 
         // return view('listar-series', ['series' => $series]); //a linha abaixo faz a mesma coisa
-        return view('listar-series', compact('series'));
+        // return view('listar-series', compact('series'));
+        return view('series.listar-series')->with('series', $series);
+    }
+
+    function create()
+    {
+        return view('series.create');
     }
 }
