@@ -6,16 +6,18 @@ use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
-    function index(Request $request)
+    public function index(Request $request)
     {
-        $series = ['The Witcher', 'Peaky Blinders'];
+        $series = [
+            'Punisher',
+            'Lost',
+            'Grey\'s Anatomy',
+        ];
 
-        // return view('listar-series', ['series' => $series]); //a linha abaixo faz a mesma coisa
-        // return view('listar-series', compact('series'));
-        return view('series.listar-series')->with('series', $series);
+        return view('series.index')->with('series', $series);
     }
 
-    function create()
+    public function create()
     {
         return view('series.create');
     }
