@@ -1,12 +1,16 @@
 <x-layout title="Séries">
-    <a href="/series/criar">Adicionar</a>
-    <ul>
+    <ul class="list-group">
         @foreach ($series as $serie)
-            <li>{{ $serie }}</li>
-            @endforeach
-
+        <li class="list-group-item">{{ $serie }}</li>
+        @endforeach
+        
     </ul>
 
+    <div class="d-flex justify-content-between align-items-center mt-2">
+        <!-- Espaço vazio para alinhar o botão à direita -->
+        <div></div>
+        <a class="btn btn-dark" href="/series/criar">Adicionar</a>
+    </div>
 </body>
 </html>
 </x-layout>
