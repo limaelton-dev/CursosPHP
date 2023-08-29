@@ -13,13 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'BookController@index');
+Route::resource('/books', 'BookController');
 
-Route::get('/test-connection', function () {
-    try {
-        DB::connection()->getPdo();
-        return "Conexão com o banco de dados estabelecida!";
-    } catch (\Exception $e) {
-        return "Erro ao conectar ao banco de dados: " . $e->getMessage();
-    }
-});
+// Route::get('/', 'BookController@index');
+// Route::post('/books', 'BookController@index');
+
+// Route::get('/test-connection', function () {
+//     try {
+//         DB::connection()->getPdo();
+//         return "Conexão com o banco de dados estabelecida!";
+//     } catch (\Exception $e) {
+//         return "Erro ao conectar ao banco de dados: " . $e->getMessage();
+//     }
+// });
