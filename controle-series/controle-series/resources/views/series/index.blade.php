@@ -1,4 +1,5 @@
 <x-layout title="Séries">
+    <!-- Fazendo um teste de commit -->
     <ul class="list-group">
         @foreach ($series as $serie)
         <li class="list-group-item">{{ $serie->nome }}</li>
