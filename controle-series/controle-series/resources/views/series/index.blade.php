@@ -10,7 +10,7 @@
     <div class="d-flex justify-content-between align-items-center mt-2">
         <!-- Espaço vazio para alinhar o botão à direita -->
         <div></div>
-        <a class="btn btn-dark" href="/series/criar">Adicionar</a>
+        <a class="btn btn-dark" href="{{ route('series.create') }}">Adicionar</a>
     </div>
 </body>
 </html>
