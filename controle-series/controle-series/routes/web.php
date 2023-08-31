@@ -20,6 +20,9 @@ Route::get('/', function () {
 
 Route::resource('/series', SeriesController::class);
 
+Route::delete('/series/destroy/{serie}', [SeriesController::class, 'destroy'])
+    ->name('series.destroy');
+
 // Route::get('/series', [SeriesController::class, 'index']);
 // Route::get('/series/criar', [SeriesController::class, 'create']);
 // Route::post('/series/salvar', [SeriesController::class, 'store']);  não uso mais o "salvar" ou o "criar"
