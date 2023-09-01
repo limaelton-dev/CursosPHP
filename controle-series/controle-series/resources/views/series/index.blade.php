@@ -16,6 +16,13 @@
                     X
                 </button>
             </form>
+            <form action="{{ route('series.update', $serie->id) }}" method="update">
+                @csrf
+                <button class="btn btn-sm btn-primary">
+                    Editar
+                </button>
+            </form>
+            
 
         </li>
         @endforeach
