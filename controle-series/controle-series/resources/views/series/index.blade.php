@@ -1,5 +1,10 @@
 <x-layout title="Séries">
     <!-- Fazendo um teste de commit -->
+    @isset($mensagemSucesso)
+    <div class="alert alert-success">
+        {{ $mensagemSucesso}}
+    </div>
+    @endisset
     <ul class="list-group">
         @foreach ($series as $serie)
         <li class="list-group-item d-flex justify-content-between align-items-center">
