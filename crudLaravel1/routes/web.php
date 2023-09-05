@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('/books', 'BookController');
 
+Route::post('/inserir-dados', 'CadastroController@inserirDados');
+
 // Route::get('/', 'BookController@index');
 // Route::post('/books', 'BookController@index');
 
