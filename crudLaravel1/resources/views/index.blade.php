@@ -31,10 +31,10 @@
                       <td>{{$user->name}}</td>
                       <td>{{$books->price}}</td>
                       <td>
-                        <a href="{{url("books/$books->id")}}">
+                        <a href="{{ url("books/$books->id") }}">
                             <button class="btn btn-dark">Visualizar</button>
                         </a>
-                        <a href="">
+                        <a href="{{ url("books/$books->id/edit") }}">
                             <button class="btn btn-dark">Editar</button>
                         </a>
                         <a href="">
