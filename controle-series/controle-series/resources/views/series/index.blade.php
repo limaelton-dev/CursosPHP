@@ -5,23 +5,24 @@
         {{ $mensagemSucesso}}
     </div>
     @endisset
+
     <ul class="list-group">
         @foreach ($series as $serie)
         <li class="list-group-item d-flex justify-content-between align-items-center">
             {{ $serie->nome }}
-            <form action="{{ route('series.destroy', $serie->id) }}" method="post">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-sm btn-danger">
-                    X
-                </button>
-            </form>
-            <form action="{{ route('series.update', $serie->id) }}" method="update">
-                @csrf
-                <button class="btn btn-sm btn-primary">
-                    Editar
-                </button>
-            </form>
+
+            <span class="d-flex">
+                <a class="btn btn-sm btn-primary" href="{{ route('series.edit', $serie->id) }}">
+                    e
+                </a>
+                <form action="{{ route('series.destroy', $serie->id) }}" method="POST" class="ms-2">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-sm btn-danger">
+                        X
+                    </button>
+                </form>
+            </span>
             
 
         </li>
