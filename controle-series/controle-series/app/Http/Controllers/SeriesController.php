@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SeriesFormRequest;
 use App\Models\Serie;
 
 class SeriesController extends Controller
 {
     public function index(Request $request)
     {
-        // $series = Serie::all();
-        $series = Serie::query()->orderBy('nome')->get();
+        $series = Serie::all();
 
         $mensagemSucesso = $request->session()->get('mensagem.sucesso');
 
@@ -22,8 +22,9 @@ class SeriesController extends Controller
         return view('series.create');
     }
 
-    public function store(Request $request)
+    public function store(SeriesFormRequest $request)
     {
+        //se for pra validar campos em uma API, invez de redirecionar, o laravel devolve um JSON com os erros
         $request->validate([
             'nome' => ['required', 'min:3']
         ]);
@@ -35,6 +36,7 @@ class SeriesController extends Controller
 
     public function edit(Serie $series)
     {
+        dd($series->seasons);
         return view('series.edit')->with('serie', $series);
     }
 
@@ -45,7 +47,7 @@ class SeriesController extends Controller
         return to_route('series.index')->with('mensagem.sucesso', "Série {$serie->nome} removida com sucesso!");
     }
 
-    public function update(Serie $series, Request $request)
+    public function update(Serie $series, SeriesFormRequest $request)
     {
         $series->fill($request->all());
         $series->save();

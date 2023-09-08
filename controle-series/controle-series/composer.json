@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
+        "lucascudo/laravel-pt-br-localization": "^2.1",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
