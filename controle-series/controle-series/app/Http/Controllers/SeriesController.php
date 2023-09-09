@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SeriesFormRequest;
-use App\Models\Serie;
+use App\Models\Series;
 
 class SeriesController extends Controller
 {
     public function index(Request $request)
     {
-        $series = Serie::all();
+        $series = Series::all();
 
         $mensagemSucesso = $request->session()->get('mensagem.sucesso');
 
@@ -29,25 +29,26 @@ class SeriesController extends Controller
             'nome' => ['required', 'min:3']
         ]);
 
-        $serie = Serie::create($request->all());
+        $serie = Series::create($request->all());
 
         return to_route('series.index')->with('mensagem.sucesso', "Série {$serie->nome} criada com sucesso!");
     }
 
-    public function edit(Serie $series)
+    public function edit(Series $series)
     {
-        dd($series->seasons);
+        // dd($series->seasons);
         return view('series.edit')->with('serie', $series);
     }
 
-    public function destroy(Serie $serie)
+    public function destroy(Series $series)
     {
-        $serie->delete();
+        // dd($series);
+        $series->delete();
 
-        return to_route('series.index')->with('mensagem.sucesso', "Série {$serie->nome} removida com sucesso!");
+        return to_route('series.index')->with('mensagem.sucesso', "Série {$series->nome} removida com sucesso!");
     }
 
-    public function update(Serie $series, SeriesFormRequest $request)
+    public function update(Series $series, SeriesFormRequest $request)
     {
         $series->fill($request->all());
         $series->save();
