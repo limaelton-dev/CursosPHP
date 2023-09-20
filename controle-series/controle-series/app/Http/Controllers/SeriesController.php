@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SeriesFormRequest;
+use App\Models\Episode;
+use App\Models\Season;
 use App\Models\Series;
 
 class SeriesController extends Controller
@@ -26,17 +28,27 @@ class SeriesController extends Controller
     {
         $serie = Series::create($request->all());
 
+        $seasons = [];
         for($i = 1; $i <= $request->seasonsQty; $i++) {
-            $season =  $serie->seasons()->create([
+            $seasons[] = [
+                'series_id' => $serie->id,
                 'number' => $i
-            ]);
+            ];
+        }
+        //aqui passo o array com os dados a serem inseridos no banco
+        Season::insert($seasons);
 
+        $episodes = [];
+        foreach($serie->seasons as $season){
             for($j = 1; $j <= $request->episodesPerSeason; $j++) {
-                $season->episodes()->create([
+                $episodes[] = [
+                    'season_id' => $season->id,
                     'number' => $j
-                ]);
+                ];
             }
         }
+        Episode::insert($episodes);
+
 
         return to_route('series.index')
             ->with('mensagem.sucesso', "Série {$serie->nome} criada com sucesso!");
