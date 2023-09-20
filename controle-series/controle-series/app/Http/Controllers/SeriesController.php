@@ -24,14 +24,22 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        //se for pra validar campos em uma API, invez de redirecionar, o laravel devolve um JSON com os erros
-        $request->validate([
-            'nome' => ['required', 'min:3']
-        ]);
-
         $serie = Series::create($request->all());
 
-        return to_route('series.index')->with('mensagem.sucesso', "Série {$serie->nome} criada com sucesso!");
+        for($i = 1; $i <= $request->seasonsQty; $i++) {
+            $season =  $serie->seasons()->create([
+                'number' => $i
+            ]);
+
+            for($j = 1; $j <= $request->episodesPerSeason; $j++) {
+                $season->episodes()->create([
+                    'number' => $j
+                ]);
+            }
+        }
+
+        return to_route('series.index')
+            ->with('mensagem.sucesso', "Série {$serie->nome} criada com sucesso!");
     }
 
     public function edit(Series $series)

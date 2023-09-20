@@ -11,6 +11,8 @@ class Episode extends Model
     //essa linha é criada, pq não quero que a migration crie esses campos
     public $timestamps = false;
 
+    protected $fillable = ['number'];
+
     public function season()
     {
         return $this->belongsTo(Season::class);
