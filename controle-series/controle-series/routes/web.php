@@ -22,7 +22,7 @@ Route::get('/', function () {
 Route::resource('/series', SeriesController::class)
 ->except(['show']);
     // ->only(['index', 'create, store', 'destroy', 'edit']);
-
+    
 Route::get('/series/{series}/seasons', [SeasonsController::class, 'index'])->name('seasons.index');
 
 // Route::delete('/series/destroy/{serie}', [SeriesController::class, 'destroy'])

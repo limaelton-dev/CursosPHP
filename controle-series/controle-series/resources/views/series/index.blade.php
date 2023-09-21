@@ -10,12 +10,12 @@
         @foreach ($series as $serie)
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <a href="{{ route('seasons.index', $serie->id) }}">
-                {{ $serie->name }}
+                {{ $serie->nome }}
             </a>
 
             <span class="d-flex">
                 <a class="btn btn-sm btn-primary" href="{{ route('series.edit', $serie->id) }}">
-                    e
+                    Editar
                 </a>
                 <form action="{{ route('series.destroy', $serie->id) }}" method="POST" class="ms-2">
                     @csrf
