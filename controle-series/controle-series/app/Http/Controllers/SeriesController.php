@@ -27,8 +27,7 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        $serie = null;
-        DB::transaction(function () use($request, &$serie) {
+        $serie = DB::transaction(function () use($request, &$serie) {
             $serie = Series::create($request->all());
     
             $seasons = [];
@@ -52,7 +51,11 @@ class SeriesController extends Controller
             }
             Episode::insert($episodes);
 
+            return $serie;
         });
+        //caso eu esteja fazendo uma transação com mais de uma inserção na mesma tabela, pode acontecer deadlock
+        //deadlock seria tentativa de adição na tabela, mas com erro
+        //para isso eu poderia informar mais um parâmetro depois da closure, com o número máximo de tentativas para as querys
         
         
         return to_route('series.index')
