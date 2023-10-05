@@ -1,6 +1,7 @@
 <x-layout title="Temporadas de {!! $series->nome !!}">
     <div class="d-flex justify-center">
-        <img src="{{ asset('storage/' . $series->cover) }}"
+        {{-- {{ dd(asset('storage/public/' . $series->cover)) }} --}}
+        <img src="{{ asset('storage/public/' . $series->cover) }}"
              style="height: 400px"
              alt="Capa da série"
              class="img-fluid">

@@ -38,7 +38,7 @@ class EmailUsersAboutSeriesCreated implements ShouldQueue
                 $event->seriesEpisodesPerSeason,
             );
             $when = now()->addSeconds($index * 5);
-            Mail::to($user)->later($when, $email);
+            // Mail::to($user)->later($when, $email);
         }
     }
 }
