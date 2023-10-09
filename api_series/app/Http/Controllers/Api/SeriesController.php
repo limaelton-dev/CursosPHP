@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SeriesFormRequest;
 use App\Models\Series;
+use App\Repositories\SeriesRepository;
 
 class SeriesController extends Controller
 {
+    public function __construct(private SeriesRepository $seriesRepository)
+    {
+    }
+
     public function index()
     {
         return Series::all();
@@ -15,10 +20,14 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        $serie = Series::create($request->all());
-
         //retorno os dados da própria série, com um código http 201
         return response()
-            ->json($serie, 201);
+            ->json($this->seriesRepository->add($request), 201);
+    }
+
+    public function show(int $series)
+    {
+        $series = Series::whereId($series)->with('seasons.episodes')->first();
+        return $series;
     }
 }
