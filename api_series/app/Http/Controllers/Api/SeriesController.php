@@ -27,14 +27,24 @@ class SeriesController extends Controller
 
     public function show(int $series)
     {
-        $series = Series::whereId($series)->with('seasons.episodes')->first();
-        return $series;
+        // $series = Series::whereId($series)->with('seasons.episodes')->first();
+        //mesma coisa
+        $seriesModel = Series::with('seasons.episodes')->find($series);
+        if($seriesModel === null) {
+            return response()->json(['message' => 'Series not found'], 404);
+        }
+        return $seriesModel;
     }
 
     public function update(Series $series, SeriesFormRequest $request)
     {
+        //fill() faz um select no banco, atualiza os dados no objeto, e depois faz update com o save()
         $series->fill($request->all());
         $series->save();
+
+        //outra tratativa:
+        // Series::where(‘id’, $series)->update($request->all());
+        // retorno de uma resposta que não contenha a série, já que não fizemos um `SELECT` 
 
         return $series;
     }
