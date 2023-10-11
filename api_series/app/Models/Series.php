@@ -16,6 +16,13 @@ class Series extends Model
         return $this->hasMany(Season::class, 'series_id');
     }
 
+    public function episodes()
+    {
+        //para eu poder recuperar os episodios...
+        //through pega APENAS os episodios
+        return $this->hasManyThrough(Episode::class, Season::class);
+    }
+
     protected static function booted()
     {
         self::addGlobalScope('ordered', function (Builder $queryBuilder) {
